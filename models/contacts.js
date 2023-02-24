@@ -2,6 +2,18 @@ const path = require('path');
 const fs = require('fs/promises');
 const { createId } = require('../helpers');
 
+const mongoose = require('mongoose');
+
+mongoose.set('strictQuery', false);
+const DB_HOST =
+  'mongodb+srv://Tvinlee:lSnidN4VAebBsDqN@cluster0.rqfgtfx.mongodb.net/contacts?retryWrites=true&w=majority';
+mongoose
+  .connect(DB_HOST)
+  .then(() => console.log('database connected'))
+  .catch((err) => {
+    console.log(err.message);
+  });
+
 const pathContacts = path.join(__dirname, './contacts.json');
 
 const listContacts = async () => {
