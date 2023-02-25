@@ -1,4 +1,7 @@
 const express = require('express');
+const { validateBody } = require('../../middlewares');
+const { newContSchema, updateFavoriteSchema } = require('../../models/contact');
+const { isValidId } = require('../../middlewares');
 
 // const contacts = require('../../models/contacts');
 // const { HttpError } = require('../../helpers');
@@ -10,12 +13,14 @@ const router = express.Router();
 
 router.get('/', ctrl.getList);
 
-// router.get('/:contactId', ctrl.getById);
+router.get('/:contactId', isValidId, ctrl.getById);
 
-// router.post('/', ctrl.add);
+router.post('/', validateBody(newContSchema), ctrl.add);
 
-// router.delete('/:contactId', ctrl.del);
+router.delete('/:contactId', isValidId, ctrl.del);
 
-// router.put('/:contactId', ctrl.update);
+router.put('/:contactId', isValidId, validateBody(newContSchema), ctrl.update);
+
+router.patch('/:contactId/favorite', isValidId, validateBody(updateFavoriteSchema), ctrl.updateFavorite);
 
 module.exports = router;
